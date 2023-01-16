@@ -1,0 +1,343 @@
+{% extends "race_simulation/base.html" %}
+{% block head %}
+<style>
+body{margin: 0px;}
+.field{background-color: greenyellow;}
+#line{position: absolute;background-color: white; width: 2px; height: 200px;right: 95%;top: 0%;}
+#goal{position: absolute;background-color: red; width: 2px; height: 200px;right: 0%;top: 0%;}
+#info{display: flex; width: 1000px;}
+#corse{width: 600px; height: 200px; background-color: green; margin-top: 50px; margin-left: 50px; border-radius: 25%; display: flex; justify-content: center;} 
+#in{width: 400px; height: 100px; background-color: white; margin-top: 50px; border-radius: 25%;}
+#mini_goal{position: absolute; background-color: red; width: 2px; height: 50px;margin-top: 150px;}
+#mini_horse{position: absolute; margin-top: 162px; z-index:1;left: 700px;}
+#start{position: absolute; top: 25%; left: 50%; z-index:2; display: block;}
+#fadeLayer {position:absolute; top:0px; left:0px; width:100%; height:100%; background-color:#000000; opacity:0.5; z-index:1; display: block;}
+.horse{width: 25px; height: 25px; border-radius: 50%; text-align: center;}
+.white{background-color: white;}
+.black{background-color: black; color: white;}
+.red{background-color: red;}
+.blue{background-color: blue; color: white;}
+.yellow{background-color: yellow;}
+.green{background-color: green;}
+.orange{background-color: orange;}
+.pink{background-color: pink;}
+</style>
+{% endblock  %}
+{% block body %}
+{% load static %}
+<div class="field">
+    {% if data.total_time1 > 0 %}
+        <div class="horse" id = "one">1</div>
+    {% endif %}
+    {% if data.total_time2 > 0 %}
+        <div class="horse" id = "two">2</div>
+    {% endif %}
+    {% if data.total_time3 > 0 %}
+        <div class="horse" id = "three">3</div>
+    {% endif %}
+    {% if data.total_time4 > 0 %}
+        <div class="horse" id = "four">4</div>
+    {% endif %}
+    {% if data.total_time5 > 0 %}
+        <div class="horse" id = "five">5</div>
+    {% endif %}
+    {% if data.total_time6 > 0 %}
+        <div class="horse" id = "six">6</div>
+    {% endif %}
+    {% if data.total_time7 > 0 %}
+        <div class="horse" id = "seven">7</div>
+    {% endif %}
+    {% if data.total_time8 > 0 %}
+        <div class="horse" id = "eight">8</div>
+    {% endif %}
+    {% if data.total_time9 > 0 %}
+        <div class="horse" id = "nine">9</div>
+    {% endif %}
+    {% if data.total_time10 > 0 %}
+        <div class="horse" id = "ten">10</div>
+    {% endif %}
+    {% if data.total_time11 > 0 %}
+        <div class="horse" id = "eleven">11</div>
+    {% endif %}
+    {% if data.total_time12 > 0 %}
+        <div class="horse" id = "twelve">12</div>
+    {% endif %}
+    {% if data.total_time13 > 0 %}
+        <div class="horse" id = "thirteen">13</div>
+    {% endif %}
+    {% if data.total_time14 > 0 %}
+        <div class="horse" id = "fourteen">14</div>
+    {% endif %}
+    {% if data.total_time15 > 0 %}
+        <div class="horse" id = "fifteen">15</div>
+    {% endif %}
+    {% if data.total_time16 > 0 %}
+        <div class="horse" id = "sixteen">16</div>
+    {% endif %}
+    {% if data.total_time17 > 0 %}
+        <div class="horse" id = "seventeen">17</div>
+    {% endif %}
+    {% if data.total_time18 > 0 %}
+        <div class="horse" id = "eighteen">18</div>
+    {% endif %}
+    <button onclick="start()" id="start">start</button>
+    <div id="fadeLayer"></div>
+    <div id = "line"></div>
+    <div id = "goal"></div>
+</div>
+<div id="info">
+    <iframe src="https://race.netkeiba.com/race/result.html?race_id={{data.race_id}}" width="400" height="500" id="web"></iframe>
+    <div id="corse">
+        <div class="horse white" id="mini_horse"></div>
+        <div id="in"></div>
+        <div id="mini_goal"></div>
+    </div>
+</div>
+
+<script>
+    var time = [];
+    var half_time = [];
+    var total_time = [];
+    time.push(["one",{{data.total_time1|safe}} - {{data.up_time1|safe}},{{data.up_time1|safe}},{{data.total_time1|safe}}]);
+    time.push(["two",{{data.total_time2|safe}} - {{data.up_time2|safe}},{{data.up_time2|safe}},{{data.total_time2|safe}}]);
+    time.push(["three",{{data.total_time3|safe}} - {{data.up_time3|safe}},{{data.up_time3|safe}},{{data.total_time3|safe}}]);
+    time.push(["four",{{data.total_time4|safe}} - {{data.up_time4|safe}},{{data.up_time4|safe}},{{data.total_time4|safe}}]);
+    time.push(["five",{{data.total_time5|safe}} - {{data.up_time5|safe}},{{data.up_time5|safe}},{{data.total_time5|safe}}]);
+    time.push(["six",{{data.total_time6|safe}} - {{data.up_time6|safe}},{{data.up_time6|safe}},{{data.total_time6|safe}}]);
+    time.push(["seven",{{data.total_time7|safe}} - {{data.up_time7|safe}},{{data.up_time7|safe}},{{data.total_time7|safe}}]);
+    time.push(["eight",{{data.total_time8|safe}} - {{data.up_time8|safe}},{{data.up_time8|safe}},{{data.total_time8|safe}}]);
+    time.push(["nine",{{data.total_time9|safe}} - {{data.up_time9|safe}},{{data.up_time9|safe}},{{data.total_time9|safe}}]);
+    time.push(["ten",{{data.total_time10|safe}} - {{data.up_time10|safe}},{{data.up_time10|safe}},{{data.total_time10|safe}}]);
+    time.push(["eleven",{{data.total_time11|safe}} - {{data.up_time11|safe}},{{data.up_time11|safe}},{{data.total_time11|safe}}]);
+    time.push(["twelve",{{data.total_time12|safe}} - {{data.up_time12|safe}},{{data.up_time12|safe}},{{data.total_time12|safe}}]);
+    time.push(["thirteen",{{data.total_time13|safe}} - {{data.up_time13|safe}},{{data.up_time13|safe}},{{data.total_time13|safe}}]);
+    time.push(["fourteen",{{data.total_time14|safe}} - {{data.up_time14|safe}},{{data.up_time14|safe}},{{data.total_time14|safe}}]);
+    time.push(["fifteen",{{data.total_time15|safe}} - {{data.up_time15|safe}},{{data.up_time15|safe}},{{data.total_time15|safe}}]);
+    time.push(["sixteen",{{data.total_time16|safe}} - {{data.up_time16|safe}},{{data.up_time16|safe}},{{data.total_time16|safe}}]);
+    time.push(["seventeen",{{data.total_time17|safe}} - {{data.up_time17|safe}},{{data.up_time17|safe}},{{data.total_time17|safe}}]);
+    time.push(["eighteen",{{data.total_time18|safe}} - {{data.up_time18|safe}},{{data.up_time18|safe}},{{data.total_time18|safe}}]);
+    time = time.filter(element => !(element[1] <= 1));
+    half_time = time.sort(function(a,b){return a[1] - b[1];}).concat();
+    total_time = time.sort(function(a,b){return a[3] - b[3];}).concat();
+    document.getElementById("line").style.height = 25*time.length+"px";
+    document.getElementById("goal").style.height = 25*time.length+"px";
+    document.getElementById("fadeLayer").style.height = 25*time.length+"px";
+    document.getElementById("one").classList.add("white");
+    if(time.length < 16){
+        document.getElementById("two").classList.add("black");
+    }else{
+        document.getElementById("two").classList.add("white");
+    }
+    if(time.length < 15){
+        document.getElementById("three").classList.add("red");
+    }else{
+        document.getElementById("three").classList.add("black");
+    }
+    if(time.length < 14){
+        document.getElementById("four").classList.add("blue");
+    }else if(time.length < 16){
+        document.getElementById("four").classList.add("red");
+    }else{
+        document.getElementById("four").classList.add("black");
+    }
+    if(time.length < 13){
+        document.getElementById("five").classList.add("yellow");
+    }else if(time.length < 15){
+        document.getElementById("five").classList.add("blue");
+    }else{
+        document.getElementById("five").classList.add("red");
+    }
+    if(time.length < 12){
+        document.getElementById("six").classList.add("green");
+    }else if(time.length < 14){
+        document.getElementById("six").classList.add("yellow");
+    }else if(time.length < 16){
+        document.getElementById("six").classList.add("blue");
+    }else{
+        document.getElementById("six").classList.add("red");
+    }
+    if(time.length < 11){
+        document.getElementById("seven").classList.add("orange");
+    }else if(time.length < 13){
+        document.getElementById("seven").classList.add("green");
+    }else if(time.length < 15){
+        document.getElementById("seven").classList.add("yellow");
+    }else{
+        document.getElementById("seven").classList.add("blue");
+    }
+    if(time.length < 10){
+        document.getElementById("eight").classList.add("pink");
+    }else if(time.length < 12){
+        document.getElementById("eight").classList.add("orange");
+    }else if(time.length < 14){
+        document.getElementById("eight").classList.add("green");
+    }else if(time.length < 16){
+        document.getElementById("eight").classList.add("yellow");
+    }else{
+        document.getElementById("eight").classList.add("blue");
+    }
+    if(time.length < 11){
+        document.getElementById("nine").classList.add("pink");
+    }else if(time.length < 13){
+        document.getElementById("nine").classList.add("orange");
+    }else if(time.length < 15){
+        document.getElementById("nine").classList.add("green");
+    }else{
+        document.getElementById("nine").classList.add("yellow");
+    }
+    if(time.length < 12){
+        document.getElementById("ten").classList.add("pink");
+    }else if(time.length < 14){
+        document.getElementById("ten").classList.add("orange");
+    }else if(time.length < 16){
+        document.getElementById("ten").classList.add("green");
+    }else{
+        document.getElementById("ten").classList.add("yellow");
+    }
+    if(time.length < 13){
+        document.getElementById("eleven").classList.add("pink");
+    }else if(time.length < 15){
+        document.getElementById("eleven").classList.add("orange");
+    }else{
+        document.getElementById("eleven").classList.add("green");
+    }
+    if(time.length < 14){
+        document.getElementById("twelve").classList.add("pink");
+    }else if(time.length < 16){
+        document.getElementById("twelve").classList.add("orange");
+    }else{
+        document.getElementById("twelve").classList.add("green");
+    }
+    if(time.length < 15){
+        document.getElementById("thirteen").classList.add("pink");
+    }else{
+        document.getElementById("thirteen").classList.add("orange");
+    }
+    if(time.length < 16){
+        document.getElementById("fourteen").classList.add("pink");
+    }else{
+        document.getElementById("fourteen").classList.add("orange");
+    }
+    if(time.length < 18){
+        document.getElementById("fifteen").classList.add("pink");
+    }else{
+        document.getElementById("fifteen").classList.add("orange");
+    }
+    document.getElementById("sixteen").classList.add("pink");
+    document.getElementById("seventeen").classList.add("pink");
+    document.getElementById("eighteen").classList.add("pink");
+    
+    function start(){
+        document.getElementById("fadeLayer").style.display = 'none';
+        document.getElementById("start").style.display = 'none';
+        let half_front_time = half_time[0][1]
+        let total_front_time = total_time[0][3]
+        time.forEach(function(horse){
+            let position = 90 - (horse[1] - half_front_time) / 0.2 * 10
+            document.getElementById(horse[0]).animate(
+            {
+                marginLeft:["0%",position + "%"]
+            },
+            {
+                duration:horse[1]*1000,
+                easing:"ease-out",
+                fill: "forwards"
+            }
+        );
+        });
+        document.getElementById("line").animate(
+            {
+                right:["95%","100%"]
+            },
+            {
+                duration:200,
+                fill: "forwards"
+            }
+        );
+        document.getElementById("line").animate(
+            {
+                right:["0%","400%"]
+            },
+            {
+                duration:6000,
+                delay:4700,
+                iterations:Math.trunc(total_front_time/6)
+            }
+        );
+        time.forEach(function(horse){
+            let position = 90 - (horse[3] - total_front_time) / 0.2 * 10
+            document.getElementById(horse[0]).animate(
+            {
+                marginLeft:[position + "%"]
+            },
+            {
+                duration:horse[2]*1000,
+                delay:horse[1]*1000,
+                fill: "forwards"
+            }
+        );
+        });
+        document.getElementById("goal").animate(
+            {
+                right:["-10%","7.5%"]
+            },
+            {
+                duration:150,
+                delay:total_front_time*1000,
+                fill: "forwards"
+            }
+        );
+        document.getElementById("mini_horse").animate(
+            {
+                left:["700px","900px"]
+            },
+            {
+                duration:total_front_time*1000/6,
+                fill: "forwards"
+            }
+        );
+        document.getElementById("mini_horse").animate(
+            {
+                left:["900px","950px","900px"],
+                marginTop:["162px","12px"]
+            },
+            {
+                duration:total_front_time*1000/6,
+                delay:total_front_time*1000/6,
+                fill: "forwards"
+            }
+        );
+        document.getElementById("mini_horse").animate(
+            {
+                left:["900px","500px"],
+            },
+            {
+                duration:total_front_time*1000/3,
+                delay:total_front_time*1000/3,
+                fill: "forwards"
+            }
+        );
+        document.getElementById("mini_horse").animate(
+            {
+                left:["500px","450px","500px"],
+                marginTop:["12px","162px"]
+            },
+            {
+                duration:total_front_time*1000/6,
+                delay:total_front_time*2000/3,
+                fill: "forwards"
+            }
+        );
+        document.getElementById("mini_horse").animate(
+            {
+                left:["500px","700px"]
+            },
+            {
+                duration:total_front_time*1000/6,
+                delay:total_front_time*5000/6,
+                fill: "forwards"
+            }
+        );
+    }
+</script>
+{% endblock  %}

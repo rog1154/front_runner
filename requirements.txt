@@ -1,7 +1,6 @@
 asgiref==3.6.0
 beautifulsoup4==4.11.1
 bs4==0.0.1
-certifi @ file:///C:/b/abs_85o_6fm0se/croot/certifi_1671487778835/work/certifi
 charset-normalizer==2.1.1
 colorama==0.4.6
 Django==4.1.4
